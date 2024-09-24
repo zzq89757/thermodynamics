@@ -15,6 +15,7 @@ def formula_test(df: pd.DataFrame):
     std = df[4].std()
     print(mean)
     print(std)
+    return
     x = np.arange(340, 380, .1)
     y = normfun(x, mean, std)
     plt.plot(x, y)
@@ -27,7 +28,7 @@ def formula_test(df: pd.DataFrame):
     plt.savefig("./figure.png")
 
 def main() -> None:
-    df = read_tsv("/data/ntc/Repository/thermodynamics/trainning_data.tsv")
+    df = read_tsv("/data/ntc/Repository/thermodynamics/trainning_data_nocor.tsv")
     formula_test(df)
     
     

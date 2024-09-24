@@ -84,18 +84,18 @@ def calc_tm(seq:str) -> list:
 
     # symmetry correction if seq is symmetrical
     sym = symmetry(seq)
-    if sym:
-        ds += 14
-        base /= 4
+    # if sym:
+    #     ds += 14
+    #     base /= 4
     
     # Terminal AT penalty 
-    for i in [seq[0],seq[-1]]:
-        if i in ["A","T"]:
-            ds += -41
-            dh += -23
-        else:
-            ds += 28
-            dh += -1
+    # for i in [seq[0],seq[-1]]:
+    #     if i in ["A","T"]:
+    #         ds += -41
+    #         dh += -23
+    #     else:
+    #         ds += 28
+    #         dh += -1
     
 
     # calculate delta by NN 
@@ -113,7 +113,7 @@ def calc_tm(seq:str) -> list:
 
     GC_count = 0 if formamide_conc == 0.0 else str.count(seq,"C") + str.count(seq,"G")
     K_mM += divalent_to_monovalent(divalent,dntp)
-    ds = ds + 0.368 * (len(seq) - 1) * log(K_mM / 1000.0 )
+    # ds = ds + 0.368 * (len(seq) - 1) * log(K_mM / 1000.0 )
 
     Tm = dh / (ds + 1.987 * log(DNA_nM / base)) - T_KELVIN
     Tm -= dmso_conc * dmso_fact
@@ -164,12 +164,12 @@ def data_generate(seq: str) -> list:
 
 def main() -> None:
     # generate primers(20~40bp) randomly
-    primer_list = primer_generate(20, 40, 100000)
+    primer_list = primer_generate(20, 40, 10000)
     # obtain dH dS dG list
     dg_li = deque()
     dh_li = deque()
     ds_li = deque()
-    output_handle = open("./trainning_data.tsv",'w')
+    output_handle = open("./trainning_data_nocor.tsv",'w')
     for primer in primer_list:
         dg, dh, ds = data_generate(primer)
         output_handle.write(f"{primer}\t{dg}\t{dh}\t{ds}\n")
